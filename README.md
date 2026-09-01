@@ -35,6 +35,8 @@ aws_learing/
 
 Whatever I learn each day, in short simple English.
 
+📖 **Shareable revision page (looks good on phone):** https://claude.ai/code/artifact/fc4b26b1-5737-4bc3-8972-0562c14fc803
+
 | Date | Topics |
 |------|--------|
 | [2 Sept 2026](Notes/Daily/2026-09-02.md) | AWS Shared Responsibility Model; split by service model (IaaS/PaaS/SaaS); AWS vs Customer responsibility table ⭐; AWS pricing models + philosophy; root account; support plans |
