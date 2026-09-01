@@ -37,7 +37,7 @@ Whatever I learn each day, in short simple English.
 
 | Date | Topics |
 |------|--------|
-| [2 Sept 2026](Notes/Daily/2026-09-02.md) | AWS Shared Responsibility Model; responsibility split by service model (IaaS/PaaS/SaaS) |
+| [2 Sept 2026](Notes/Daily/2026-09-02.md) | AWS Shared Responsibility Model; split by service model (IaaS/PaaS/SaaS); AWS vs Customer responsibility table ⭐ |
 
 ## 🎯 Learning roadmap
 
