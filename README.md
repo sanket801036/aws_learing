@@ -13,7 +13,9 @@ aws_learing/
 │       └── images/
 │           └── aws-global-infrastructure.png
 ├── Notes/
-│   └── 01-cloud-computing-basics.md
+│   ├── 01-cloud-computing-basics.md
+│   └── Daily/
+│       └── 2026-09-02.md
 └── README.md
 ```
 
@@ -28,6 +30,14 @@ aws_learing/
 | No. | Topic |
 |-----|-------|
 | 01 | [Cloud Computing Basics](Notes/01-cloud-computing-basics.md) |
+
+## 🗓️ Daily notes
+
+Whatever I learn each day, in short simple English.
+
+| Date | Topics |
+|------|--------|
+| [2 Sept 2026](Notes/Daily/2026-09-02.md) | AWS Shared Responsibility Model |
 
 ## 🎯 Learning roadmap
 
