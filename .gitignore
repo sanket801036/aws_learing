@@ -1,0 +1,29 @@
+# OS / editor
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+
+# Word / Office temp files
+~$*.docx
+~$*.doc
+~$*.xlsx
+*.tmp
+
+# AWS credentials - never commit these
+.aws/
+*.pem
+*.ppk
+credentials
+credentials.csv
+*accessKeys*.csv
+.env
+.env.*
+
+# Terraform / CDK (for later practice)
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars
+cdk.out/
