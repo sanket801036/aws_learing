@@ -1,5 +1,7 @@
 # aws_learing
 
+### 🌐 Read the notes online → **https://sanket801036.github.io/aws_learing/**
+
 My AWS learning repository — notes, assignments and practice work while learning Amazon Web Services.
 
 ## 📁 Repository structure
@@ -35,11 +37,11 @@ aws_learing/
 
 Whatever I learn each day, in short simple English.
 
-📖 **Shareable revision page (looks good on phone):** https://claude.ai/code/artifact/fc4b26b1-5737-4bc3-8972-0562c14fc803
+📖 Read them online: **https://sanket801036.github.io/aws_learing/**
 
 | Date | Topics |
 |------|--------|
-| [2 Sept 2026](Notes/Daily/2026-09-02.md) | AWS Shared Responsibility Model; split by service model (IaaS/PaaS/SaaS); AWS vs Customer responsibility table ⭐; AWS pricing models + philosophy; root account; support plans |
+| [2 Sept 2026](Notes/Daily/2026-09-02.md) · [web](https://sanket801036.github.io/aws_learing/2026-09-02.html) | AWS Shared Responsibility Model; split by service model (IaaS/PaaS/SaaS); AWS vs Customer responsibility table ⭐; AWS pricing models + philosophy; root account; support plans |
 
 ## 🎯 Learning roadmap
 
