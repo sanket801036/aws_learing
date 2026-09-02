@@ -1,0 +1,401 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AWS Day 1 - Who is responsible for what?</title>
+<meta name="description" content="AWS revision notes: Shared Responsibility Model, pricing, root account and support plans, with a memory diagram and interview answers.">
+<meta property="og:title" content="AWS Day 1 - Who is responsible for what?">
+<meta property="og:description" content="Shared Responsibility Model, pricing, root account and support plans - with a memory diagram and interview answers.">
+<meta property="og:type" content="article">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☁️</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,500;0,600;1,6..72,400&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="wrap">
+
+  <header class="masthead">
+    <p class="eyebrow">AWS Revision · Day 1 · 2 September 2026</p>
+    <h1>Who is responsible for what?</h1>
+    <p class="standfirst">The Shared Responsibility Model, pricing, the root account and support plans — written short, with the interview answers kept at the bottom.</p>
+    <div class="chips">
+      <span class="chip">Shared Responsibility</span>
+      <span class="chip">IaaS / PaaS / SaaS</span>
+      <span class="chip">Pricing</span>
+      <span class="chip">Root Account</span>
+      <span class="chip">Support Plans</span>
+    </div>
+  </header>
+
+  <nav>
+    <div class="navrow">
+      <a href="#srm">1 · Shared Responsibility</a>
+      <a href="#models">2 · Service Models</a>
+      <a href="#table">3 · The Table</a>
+      <a href="#pricing">4 · Pricing</a>
+      <a href="#root">5 · Root Account</a>
+      <a href="#support">6 · Support Plans</a>
+      <a href="#diagram" class="key">◆ Diagram</a>
+      <a href="#interview" class="key">◆ Interview</a>
+    </div>
+  </nav>
+
+  <!-- 1 -->
+  <section id="srm">
+    <span class="num">01</span>
+    <h2>AWS Shared Responsibility Model</h2>
+    <p class="lede">It defines the <strong>security and compliance</strong> responsibilities between AWS and the customer — in plain words, who makes sure the hardware and software are working properly and as per the rules.</p>
+    <ul>
+      <li><strong>Compliance</strong> = following the rules and laws made for data (GDPR, HIPAA, PCI-DSS).</li>
+      <li>Two sides only: <strong>AWS</strong> = security <em>of</em> the cloud. <strong>Customer</strong> = security <em>in</em> the cloud.</li>
+    </ul>
+
+    <h3>AWS Responsibility — security OF the cloud</h3>
+    <div class="scroller">
+      <table>
+        <thead><tr><th>Item</th><th>Meaning</th><th>Example</th></tr></thead>
+        <tbody>
+          <tr><td>Physical + facility</td><td>AWS keeps the building and facility safe.</td><td>Guards and badge entry; you can never walk in.</td></tr>
+          <tr><td>Hardware &amp; servers</td><td>AWS buys, repairs and replaces the machines.</td><td>A failed disk under your EC2 is replaced by AWS.</td></tr>
+          <tr><td>Hypervisor</td><td>Software AWS installs on the physical machine; runs many VMs on one server.</td><td>Another customer's EC2 cannot read your instance.</td></tr>
+          <tr><td>Network (NI)</td><td>Switches, routers, cables and the global backbone.</td><td>Traffic between AZs runs on AWS's private fibre.</td></tr>
+          <tr><td>Managed services</td><td>AWS patches the software of its managed services.</td><td>AWS installs the MySQL patch on your RDS.</td></tr>
+          <tr><td>Global infrastructure</td><td>AWS builds and runs Regions, AZs and Edge Locations.</td><td>3 AZs in Mumbai stay running for your app.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Customer Responsibility — security IN the cloud</h3>
+    <div class="scroller">
+      <table>
+        <thead><tr><th>Item</th><th>Meaning</th><th>Example</th></tr></thead>
+        <tbody>
+          <tr><td>Data</td><td>The data you store and process is yours to protect.</td><td>You decide who can download a file from your S3 bucket.</td></tr>
+          <tr><td>IAM (the core)</td><td>Permissions and access, so only authorized users get in.</td><td>Intern gets read-only; MFA on root.</td></tr>
+          <tr><td>Application security</td><td>Your code, your software, your OS patches.</td><td>Fix a SQL-injection bug; run OS updates on EC2.</td></tr>
+          <tr><td>Network config</td><td>Security groups, firewalls and VPC rules.</td><td>Open only port 443; keep the DB subnet private.</td></tr>
+          <tr><td>Encryption</td><td>Encrypt in transit and at rest; manage the keys.</td><td>S3 encryption with KMS; HTTPS on the site.</td></tr>
+          <tr><td>Compliance</td><td>Your usage must follow your industry's rules.</td><td>A hospital app stores patient data the HIPAA way.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="note"><strong>Remember:</strong> AWS protects the <strong>building</strong>, you protect your <strong>room</strong>.</div>
+
+    <h3>Extra points from class</h3>
+    <p><strong>Host OS vs Guest OS</strong> — this is exactly why OS sits on both sides.</p>
+    <div class="scroller">
+      <table>
+        <thead><tr><th></th><th>Managed by</th><th>What it is</th></tr></thead>
+        <tbody>
+          <tr><td>Host OS</td><td>AWS</td><td>The OS on the physical machine, which runs the hypervisor.</td></tr>
+          <tr><td>Guest OS</td><td>Customer</td><td>The OS inside the VM you launch — your EC2's Linux or Windows.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p><strong>Network config — stateful vs stateless firewall</strong></p>
+    <div class="scroller">
+      <table>
+        <thead><tr><th></th><th>Stateful — Security Group</th><th>Stateless — NACL</th></tr></thead>
+        <tbody>
+          <tr><td>Return traffic</td><td>Automatic — inbound allow kiya to reply apne aap jaata hai.</td><td>Manual — inbound aur outbound dono rules likhne padte hain.</td></tr>
+          <tr><td>Works on</td><td>Instance (ENI) level</td><td>Subnet level</td></tr>
+          <tr><td>Rules</td><td>Only allow</td><td>Allow + deny</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <ul>
+      <li><strong>Inbound</strong> = request coming into your server. <strong>Outbound</strong> = traffic going out.</li>
+    </ul>
+
+    <p><strong>Encryption basics</strong></p>
+    <ul>
+      <li>Encryption = <strong>plain text → cipher text</strong> (unreadable). Decryption is the reverse.</li>
+      <li><strong>Symmetric</strong> — one key for both encrypt and decrypt (fast; AES, used in S3/EBS).</li>
+      <li><strong>Asymmetric</strong> — two keys: public encrypts, private decrypts (RSA; SSH key pair, TLS handshake).</li>
+      <li><strong>At rest</strong> = stored data (S3, EBS) → encrypt with KMS. <strong>In transit</strong> = moving data → HTTPS / TLS.</li>
+    </ul>
+  </section>
+
+  <!-- 2 -->
+  <section id="models">
+    <span class="num">02</span>
+    <h2>Responsibility by service model</h2>
+    <p class="lede">Move <code>IaaS → PaaS → SaaS</code> and AWS takes more, you take less.</p>
+    <div class="scroller">
+      <table>
+        <thead><tr><th>Model</th><th>AWS example</th><th>AWS handles</th><th>You handle</th></tr></thead>
+        <tbody>
+          <tr><td>IaaS</td><td>EC2</td><td>Physical infra, hypervisor, network</td><td>OS, patching, application, data</td></tr>
+          <tr><td>PaaS</td><td>Elastic Beanstalk</td><td>Infra + OS + runtime, scaling</td><td>Application code, data</td></tr>
+          <tr><td>SaaS</td><td>Amazon QuickSight</td><td>Almost everything</td><td>Your usage — data and user access</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="note c"><strong>Rule:</strong> more control = more responsibility.</div>
+  </section>
+
+  <!-- 3 -->
+  <section id="table">
+    <span class="num">03</span>
+    <h2>The table mam called most important</h2>
+    <div class="scroller">
+      <table>
+        <thead><tr><th>Responsibility</th><th class="tick">AWS</th><th class="tick">Customer</th></tr></thead>
+        <tbody>
+          <tr><td>Physical Security</td><td class="tick a">✓</td><td class="tick"></td></tr>
+          <tr><td>Network Security</td><td class="tick a">✓</td><td class="tick"></td></tr>
+          <tr><td>Data Center Security</td><td class="tick a">✓</td><td class="tick"></td></tr>
+          <tr><td>Hypervisor / Virtualization</td><td class="tick a">✓</td><td class="tick"></td></tr>
+          <tr><td>Operating System</td><td class="tick a">✓</td><td class="tick c">✓</td></tr>
+          <tr><td>Configure Firewalls / Security Groups</td><td class="tick"></td><td class="tick c">✓</td></tr>
+          <tr><td>Data Encryption</td><td class="tick"></td><td class="tick c">✓</td></tr>
+          <tr><td>Identity and Access Management</td><td class="tick"></td><td class="tick c">✓</td></tr>
+          <tr><td>Compliance</td><td class="tick a">✓</td><td class="tick c">✓</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Yaad karne ka formula: 4 – 3 – 2</h3>
+    <div class="mnemonic">
+      <div class="mcard a">
+        <span class="cnt">4</span>
+        <span class="lbl">AWS</span>
+        <p>Physical, Network, Data Center, Hypervisor — the bottom layer, the stuff you can touch.</p>
+      </div>
+      <div class="mcard c">
+        <span class="cnt">3</span>
+        <span class="lbl">Customer</span>
+        <p>Firewall/SG, Encryption, IAM — whatever you click in the console.</p>
+      </div>
+      <div class="mcard b">
+        <span class="cnt">2</span>
+        <span class="lbl">Both — "OC dono ka"</span>
+        <p><strong>O</strong>perating System and <strong>C</strong>ompliance. Only these two are shared.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4 -->
+  <section id="pricing">
+    <span class="num">04</span>
+    <h2>AWS pricing</h2>
+    <p class="lede">AWS charges on usage — how much you use, and for how long.</p>
+
+    <div class="flow">
+      <div class="flowcard free">
+        <span class="dir">◀ INBOUND</span>
+        <span class="big">Data IN = free</span>
+        <p>Uploading into S3, EC2 or any AWS service costs nothing.</p>
+      </div>
+      <div class="flowcard paid">
+        <span class="dir">OUTBOUND ▶</span>
+        <span class="big">Data OUT = paid</span>
+        <p>Data leaving AWS to the internet or another region is billed. First GB/month is usually free.</p>
+      </div>
+    </div>
+
+    <div class="scroller">
+      <table>
+        <thead><tr><th>Factor</th><th>Service</th><th>Charged on</th></tr></thead>
+        <tbody>
+          <tr><td>Compute</td><td>EC2</td><td>Instance type, size, region, running hours</td></tr>
+          <tr><td>Compute</td><td>Lambda</td><td>Requests + duration (ms) + memory given</td></tr>
+          <tr><td>Storage</td><td>S3</td><td>GB stored, storage class, requests (PUT/GET), transfer</td></tr>
+          <tr><td>Storage</td><td>EBS</td><td>Volume size, type (SSD/HDD), IOPS, snapshots</td></tr>
+          <tr><td>Network</td><td>VPC</td><td>Transfer between VPCs/regions, VPN, PrivateLink</td></tr>
+          <tr><td>Network</td><td>CloudFront</td><td>Data transfer out, requests, edge locations used</td></tr>
+          <tr><td>Database</td><td>RDS</td><td>Instance type, storage, backups, I/O, transfer out</td></tr>
+          <tr><td>Database</td><td>DynamoDB</td><td>Read/Write capacity units, storage, backups, streams</td></tr>
+          <tr><td>Database</td><td>Aurora</td><td>Instance hours, storage, backup usage</td></tr>
+          <tr><td>Extra</td><td>ELB</td><td>Load balancer hours + data processed + requests</td></tr>
+          <tr><td>Extra</td><td>Elastic IP</td><td>Since Feb 2024, every public IPv4 costs $0.005/hour — attached or idle</td></tr>
+          <tr><td>Extra</td><td>Licensing</td><td>Windows Server, Oracle DB licence adds cost</td></tr>
+          <tr><td>Extra</td><td>Region</td><td>Same service, different region = different price</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="note"><strong>Golden rule:</strong> you pay for compute time + stored GB + data going out.</div>
+
+    <h3>EC2 purchase options</h3>
+    <div class="scroller">
+      <table>
+        <thead><tr><th>Option</th><th>When to use</th><th>Saving</th></tr></thead>
+        <tbody>
+          <tr><td>On-Demand</td><td>Short or unpredictable work</td><td>0% — costliest</td></tr>
+          <tr><td>Reserved / Savings Plan</td><td>Steady 1–3 year workload</td><td>up to ~70%</td></tr>
+          <tr><td>Spot</td><td>Batch jobs that can be interrupted</td><td>up to ~90%</td></tr>
+          <tr><td>Dedicated Host</td><td>Licence or compliance needs own hardware</td><td>costliest</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Pricing philosophy — four lines, ratt lo</h3>
+    <ul>
+      <li>Pay as you go</li>
+      <li>Pay less when you reserve</li>
+      <li>Pay less by using more (volume discount)</li>
+      <li>Pay less as AWS grows</li>
+    </ul>
+  </section>
+
+  <!-- 5 -->
+  <section id="root">
+    <span class="num">05</span>
+    <h2>Root account</h2>
+    <p class="lede">The first account created when you sign up. It has unrestricted access to everything.</p>
+    <div class="scroller">
+      <table>
+        <thead><tr><th>Point</th><th>Meaning</th></tr></thead>
+        <tbody>
+          <tr><td>Unrestricted access</td><td>Full access to every service, IAM, billing and security settings.</td></tr>
+          <tr><td>Full permissions</td><td>Create/delete IAM users, change billing, even close the account.</td></tr>
+          <tr><td>Security risk</td><td>Full power = biggest target, so limit its use and enable MFA.</td></tr>
+          <tr><td>Primary use</td><td>Only setup and the few tasks IAM users cannot do.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="note"><strong>Best practices:</strong> MFA on root → make an admin IAM user for daily work → never create root access keys → strong password → billing alerts on.</div>
+  </section>
+
+  <!-- 6 -->
+  <section id="support">
+    <span class="num">06</span>
+    <h2>Support plans</h2>
+    <p class="lede">Paid packages that give technical assistance, guidance and troubleshooting from AWS experts — architecture design, service issues, best practices.</p>
+    <p>Four plans: <code>Basic → Developer → Business → Enterprise</code>. Going up, the response time gets faster and the cost goes up.</p>
+  </section>
+
+  <!-- diagram -->
+  <section id="diagram">
+    <span class="num">◆</span>
+    <h2>One diagram to remember it all</h2>
+    <p class="lede">Read it like a building. The <strong>foundation is AWS</strong>, the <strong>room upstairs is yours</strong>, and only two floors in the middle are shared.</p>
+
+    <div class="diagram">
+      <div class="dg-head">
+        <span class="dg-title">Security of / in the cloud</span>
+        <div class="legend">
+          <span><i class="swatch a"></i>AWS</span>
+          <span><i class="swatch b"></i>Both</span>
+          <span><i class="swatch c"></i>Customer</span>
+        </div>
+      </div>
+
+      <div class="stack">
+        <div class="band c">
+          <div class="band-rail">Customer<br>security IN<br>the cloud</div>
+          <div class="band-rows">
+            <div class="layer">Identity &amp; Access Management <small>IAM users, roles</small></div>
+            <div class="layer">Data Encryption <small>KMS, HTTPS</small></div>
+            <div class="layer">Firewalls / Security Groups <small>SG, NACL</small></div>
+          </div>
+        </div>
+
+        <div class="band b">
+          <div class="band-rail">Both<br>"OC"</div>
+          <div class="band-rows">
+            <div class="layer">Operating System <small>guest OS you · host OS AWS</small></div>
+            <div class="layer">Compliance <small>AWS certifies · you follow</small></div>
+          </div>
+        </div>
+
+        <div class="band a">
+          <div class="band-rail">AWS<br>security OF<br>the cloud</div>
+          <div class="band-rows">
+            <div class="layer">Hypervisor / Virtualization <small>runs many VMs</small></div>
+            <div class="layer">Network Security <small>switches, routers</small></div>
+            <div class="layer">Data Center Security <small>the facility</small></div>
+            <div class="layer">Physical Security <small>guards, locks</small></div>
+          </div>
+        </div>
+      </div>
+
+      <p class="ground-line">3 upar tumhare · 2 beech ke dono ke · 4 neeche AWS ke</p>
+    </div>
+
+    <div class="note c">Ek line me: <strong>jo cheez chhu sakte ho wo AWS ki, jo console me click karte ho wo tumhari.</strong> Beech me sirf OS aur Compliance.</div>
+  </section>
+
+  <!-- interview -->
+  <section id="interview">
+    <span class="num">◆</span>
+    <h2>Interview points</h2>
+    <p class="lede">Hinglish me, jaise interview me bolna hai.</p>
+
+    <div class="qgroup">
+      <h3>Shared Responsibility Model</h3>
+
+      <div class="q"><span class="ask">"Who patches the OS?"</span>
+        <p>EC2 pe <strong>tum</strong>, RDS / Beanstalk / Lambda pe <strong>AWS</strong>. Ye sabse zyada poocha jaane wala trap hai.</p></div>
+
+      <div class="q"><span class="ask">Public S3 bucket se data leak — kiski galti?</span>
+        <p><strong>Customer ki.</strong> Bucket policy hamesha tumhari. Real duniya me zyadatar cloud breach customer ki misconfiguration se hote hain, AWS ki galti se nahi.</p></div>
+
+      <div class="q"><span class="ask">OS aur Compliance dono ki list me kyun aate hain?</span>
+        <p>OS — host OS aur hypervisor AWS ka, EC2 ke andar wala guest OS tumhara. Compliance — AWS apne data center ka certification leta hai (ISO, SOC, PCI-DSS), us certified infra pe apni app ko rules ke hisaab se banana tumhara kaam. Isko bolte hain <strong>inherited controls</strong>.</p></div>
+
+      <div class="q"><span class="ask">SG vs NACL</span>
+        <p>Security Group <strong>stateful</strong> — reply apne aap allow. NACL <strong>stateless</strong> — dono taraf rule likhna padta hai. SG instance pe, NACL subnet pe. SG me sirf allow, NACL me deny bhi.</p></div>
+
+      <div class="q"><span class="ask">"AWS mera data encrypt kar deta hai?"</span>
+        <p>AWS <strong>tool deta hai</strong> (KMS, S3 encryption), par <strong>on karna aur keys manage karna customer ka kaam hai</strong>.</p></div>
+
+      <div class="q"><span class="ask">Yaad rakhne ka shortcut</span>
+        <p>"Ye cheez chhu sakte ho ya console me click karte ho?" Chhune wali (building, cable, server) = AWS. Click wali (SG, KMS, IAM) = customer. Aur keywords bolo — AWS = security <strong>of</strong> the cloud, customer = security <strong>in</strong> the cloud.</p></div>
+    </div>
+
+    <div class="qgroup">
+      <h3>Pricing</h3>
+
+      <div class="q"><span class="ask">Data IN free, data OUT paid</span>
+        <p>Sabse zyada poocha jaata hai. Internet se AWS me upload free, AWS se bahar nikaalna paid.</p></div>
+
+      <div class="q"><span class="ask">EC2 vs Lambda cost</span>
+        <p>EC2 chalu hai to paisa lagta rahega chahe traffic ho ya na ho; Lambda me sirf request chalne pe (per ms) charge. Kam ya uneven traffic = Lambda sasta.</p></div>
+
+      <div class="q"><span class="ask">EBS ka classic trap</span>
+        <p>EC2 stop karne se compute ka paisa band ho jata hai, par <strong>EBS volume ka storage charge chalta rehta hai</strong>. Unused volumes delete karo.</p></div>
+
+      <div class="q"><span class="ask">S3 aur Glacier</span>
+        <p>Sirf storage ka paisa nahi — PUT/GET requests aur transfer ka bhi lagta hai. Glacier storage me sasta, par <strong>retrieval ka alag charge</strong>.</p></div>
+
+      <div class="q"><span class="ask">Elastic IP — naya point</span>
+        <p>Feb 2024 se har public IPv4 pe $0.005/hour, chahe use ho ya na ho. Ye bolne se latest knowledge dikhti hai.</p></div>
+
+      <div class="q"><span class="ask">Cost vs availability trade-off</span>
+        <p>Same-AZ transfer free, cross-AZ aur cross-region paid. App aur DB ek AZ me rakho to bill kam — par HA ke liye multi-AZ chahiye. Ye trade-off wali baat interviewer sunna chahta hai.</p></div>
+
+      <div class="q"><span class="ask">"Cost kaise kam karein?"</span>
+        <p>Savings Plan / Reserved lo, batch kaam Spot pe chalao, S3 lifecycle se purana data Glacier me bhejo, Auto Scaling on rakho, unused EBS aur Elastic IP delete karo, aur Cost Explorer + Budgets se monitor karo.</p></div>
+
+      <div class="q"><span class="ask">Chhote points</span>
+        <p>DynamoDB ke 2 modes — On-Demand (uneven traffic) aur Provisioned (predictable me sasta). RDS me DB size tak backup free. Windows EC2 Linux se mehnga kyunki licence included. CloudFront bill kam karta hai — cache se origin hit kam aur uska outbound rate sasta.</p></div>
+    </div>
+
+    <div class="qgroup">
+      <h3>Root Account</h3>
+
+      <div class="q"><span class="ask">"Root se kaam kyun nahi karte?"</span>
+        <p>Ek galti ya password leak = poora account gaya. Root pe normal IAM policy laga bhi nahi sakte. Pehle din ka kaam: MFA on karo, admin IAM user banao, root lock karke rakho.</p></div>
+
+      <div class="q"><span class="ask">Root-only tasks</span>
+        <p>Account band karna, support plan badalna, account ka name/email/root password badalna, account ko AWS Organizations me move karna, aur galat S3 bucket policy theek karna.</p></div>
+
+      <div class="q"><span class="ask">Root ko rok kaun sakta hai?</span>
+        <p>IAM policy nahi — sirf <strong>AWS Organizations ka SCP</strong> (Service Control Policy). Aur root ki access key kabhi mat banao; ho to delete karo.</p></div>
+    </div>
+  </section>
+
+  <footer>
+    <span><a href="./">← All revision days</a> · AWS Revision · Day 1 · 2 Sept 2026</span>
+    <span><a href="https://github.com/sanket801036/aws_learing">github.com/sanket801036/aws_learing</a></span>
+  </footer>
+
+</div>
+</body>
+</html>
