@@ -14,6 +14,10 @@ aws_learing/
 │       ├── Assignment-1.md              <- same answers in Markdown
 │       └── images/
 │           └── aws-global-infrastructure.png
+│   └── Assignment-3/
+│       ├── AWS-Assignment-3.docx         <- IAM practical steps
+│       ├── Assignment-3.md
+│       └── images/                       <- IAM diagrams
 ├── Notes/
 │   ├── 01-cloud-computing-basics.md
 │   └── Daily/
@@ -26,6 +30,7 @@ aws_learing/
 | No. | Topic | Word file | Markdown |
 |-----|-------|-----------|----------|
 | 1 | Cloud Computing Fundamentals & AWS Global Infrastructure | [AWS-Assignment-1.docx](Assignments/Assignment-1/AWS-Assignment-1.docx) | [Assignment-1.md](Assignments/Assignment-1/Assignment-1.md) |
+| 3 | IAM — Users, Groups, Roles and Assuming a Role (practical steps) | [AWS-Assignment-3.docx](Assignments/Assignment-3/AWS-Assignment-3.docx) | [Assignment-3.md](Assignments/Assignment-3/Assignment-3.md) |
 
 ## 📚 Notes
 
@@ -48,7 +53,7 @@ Whatever I learn each day, in short simple English.
 - [x] Cloud computing basics — definition, benefits, service models
 - [x] Deployment models — public, private, hybrid, community
 - [x] AWS Global Infrastructure — Regions, AZs, Data Centers, Edge Locations
-- [ ] IAM — users, groups, roles, policies
+- [x] IAM — users, groups, roles, policies
 - [ ] EC2 — instance types, AMI, security groups, key pairs
 - [ ] S3 — buckets, storage classes, versioning, lifecycle
 - [ ] VPC — subnets, route tables, IGW, NAT
