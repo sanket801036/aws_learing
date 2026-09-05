@@ -14,10 +14,9 @@ aws_learing/
 │       ├── Assignment-1.md              <- same answers in Markdown
 │       └── images/
 │           └── aws-global-infrastructure.png
-│   └── Assignment-3/
-│       ├── AWS-Assignment-3.docx         <- IAM practical steps
-│       ├── Assignment-3.md
-│       └── images/                       <- IAM diagrams
+│   ├── Assignment-2/                    <- root account creation
+│   └── Assignment-3/                    <- IAM practical steps
+│       (each folder has .docx + .pdf + .md + images/)
 ├── Notes/
 │   ├── 01-cloud-computing-basics.md
 │   └── Daily/
@@ -27,10 +26,11 @@ aws_learing/
 
 ## 📝 Assignments
 
-| No. | Topic | Word file | Markdown |
-|-----|-------|-----------|----------|
-| 1 | Cloud Computing Fundamentals & AWS Global Infrastructure | [AWS-Assignment-1.docx](Assignments/Assignment-1/AWS-Assignment-1.docx) | [Assignment-1.md](Assignments/Assignment-1/Assignment-1.md) |
-| 3 | IAM — Users, Groups, Roles and Assuming a Role (practical steps) | [AWS-Assignment-3.docx](Assignments/Assignment-3/AWS-Assignment-3.docx) | [Assignment-3.md](Assignments/Assignment-3/Assignment-3.md) |
+| No. | Topic | Word | PDF | Markdown |
+|-----|-------|------|-----|----------|
+| 1 | Cloud Computing Fundamentals & AWS Global Infrastructure | [.docx](Assignments/Assignment-1/AWS-Assignment-1.docx) | [.pdf](Assignments/Assignment-1/AWS-Assignment-1.pdf) | [read](Assignments/Assignment-1/Assignment-1.md) |
+| 2 | AWS Root Account Creation — step by step | [.docx](Assignments/Assignment-2/AWS-Assignment-2.docx) | [.pdf](Assignments/Assignment-2/AWS-Assignment-2.pdf) | [read](Assignments/Assignment-2/Assignment-2.md) |
+| 3 | IAM — Users, Groups, Roles and Assuming a Role | [.docx](Assignments/Assignment-3/AWS-Assignment-3.docx) | [.pdf](Assignments/Assignment-3/AWS-Assignment-3.pdf) | [read](Assignments/Assignment-3/Assignment-3.md) |
 
 ## 📚 Notes
 
