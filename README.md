@@ -38,6 +38,12 @@ aws_learing/
 |-----|-------|
 | 01 | [Cloud Computing Basics](Notes/01-cloud-computing-basics.md) |
 
+## 📝 Tests
+
+| Test | Topics | Answers + explanations |
+|------|--------|------------------------|
+| AWS Test 2 | Shared Responsibility, IAM, STS, Support plans, Global infrastructure | [45 MCQs solved](Tests/AWS-Test-2.md) |
+
 ## 🗓️ Daily notes
 
 Whatever I learn each day, in short simple English.
